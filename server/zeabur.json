@@ -3,6 +3,6 @@
         "builder": "NIXPACKS"
     },
     "deploy": {
-        "start_command": "node server/index.js"
+        "start_command": "node index.js"
     }
 }
