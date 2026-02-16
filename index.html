@@ -4,11 +4,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>微博情绪分析助手 v1.0.1</title>
-    <!-- Deployment Force Refresh v1.0.1 -->
+    <title>微博情绪分析助手 v1.0.2</title>
+    <!-- Deployment Fix v1.0.2: Restoring Layout and CDN -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#007AFF',
+                        'apple-gold': '#FFCC00',
+                        'apple-gray': '#8E8E93',
+                        'background-light': '#F5F5F7',
+                        'background-dark': '#1C1C1E',
+                    },
+                    borderRadius: {
+                        'ios': '12px'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: "SF Pro Display", "Inter", "PingFang SC", "Microsoft YaHei", system-ui;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .dark .glass-card {
+            background: rgba(44, 44, 46, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar-blur {
+            background: rgba(245, 245, 247, 0.8);
+            backdrop-filter: blur(20px);
+        }
+
+        .dark .sidebar-blur {
+            background: rgba(28, 28, 30, 0.85);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            border: 2px solid transparent;
+            background-clip: content-box;
+        }
+
+        .dark ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+        }
+    </style>
 </head>
 
 <body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-100 overflow-hidden">
