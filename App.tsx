@@ -26,9 +26,9 @@ const App: React.FC = () => {
       setPosts(result.posts);
       setKeywords(result.keywords);
       setSummary(result.summary);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Analysis failed:", error);
-      alert("AI 分析失败，请稍后重试。");
+      alert(`AI 分析失败: ${error.message || "请稍后重试"}`);
     } finally {
       setIsLoading(false);
     }
@@ -39,15 +39,15 @@ const App: React.FC = () => {
     setSearchQuery('科技发展');
     // Set some mock data or trigger first search
     const init = async () => {
-        setIsLoading(true);
-        try {
-            const result = await analyzeWeiboContent('热门话题');
-            setPosts(result.posts);
-            setKeywords(result.keywords);
-            setSummary(result.summary);
-        } finally {
-            setIsLoading(false);
-        }
+      setIsLoading(true);
+      try {
+        const result = await analyzeWeiboContent('热门话题');
+        setPosts(result.posts);
+        setKeywords(result.keywords);
+        setSummary(result.summary);
+      } finally {
+        setIsLoading(false);
+      }
     };
     init();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -63,16 +63,16 @@ const App: React.FC = () => {
         <label className="text-[11px] font-bold uppercase tracking-wider opacity-40 px-2">微博关键词检索</label>
         <div className="relative px-1">
           <span className="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-sm opacity-40">search</span>
-          <input 
-            className="w-full bg-black/5 dark:bg-white/5 border-none rounded-lg py-1.5 pl-9 pr-3 text-xs focus:ring-2 focus:ring-primary/40 outline-none transition-all" 
-            placeholder="输入搜索话题" 
+          <input
+            className="w-full bg-black/5 dark:bg-white/5 border-none rounded-lg py-1.5 pl-9 pr-3 text-xs focus:ring-2 focus:ring-primary/40 outline-none transition-all"
+            placeholder="输入搜索话题"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
             type="text"
           />
         </div>
-        <button 
+        <button
           onClick={handleSearch}
           disabled={isLoading}
           className="mx-1 bg-primary text-white text-xs font-medium py-2 rounded-lg hover:bg-primary/90 transition-all shadow-sm active:scale-95 disabled:opacity-50"
@@ -90,9 +90,9 @@ const App: React.FC = () => {
             <option>近1年</option>
           </select>
           <div className="flex flex-col gap-1.5 p-2 bg-black/5 dark:bg-white/5 rounded-lg">
-            <input className="bg-transparent border-none p-0 text-[11px] focus:ring-0 w-full cursor-pointer dark:invert" type="date" defaultValue="2024-01-01"/>
+            <input className="bg-transparent border-none p-0 text-[11px] focus:ring-0 w-full cursor-pointer dark:invert" type="date" defaultValue="2024-01-01" />
             <div className="h-px bg-black/5 dark:bg-white/5"></div>
-            <input className="bg-transparent border-none p-0 text-[11px] focus:ring-0 w-full cursor-pointer dark:invert" type="date" defaultValue="2024-01-31"/>
+            <input className="bg-transparent border-none p-0 text-[11px] focus:ring-0 w-full cursor-pointer dark:invert" type="date" defaultValue="2024-01-31" />
           </div>
         </div>
       </div>
@@ -105,9 +105,9 @@ const App: React.FC = () => {
             { id: 'sentiment', label: '情绪分布', icon: 'pie_chart' },
             { id: 'collection', label: '自定义合集', icon: 'bookmarks' },
           ].map(item => (
-            <a 
+            <a
               key={item.id}
-              className={`flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium transition-colors ${item.active ? 'bg-primary text-white' : 'hover:bg-black/5 dark:hover:bg-white/5'}`} 
+              className={`flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium transition-colors ${item.active ? 'bg-primary text-white' : 'hover:bg-black/5 dark:hover:bg-white/5'}`}
               href="#"
             >
               <span className={`material-symbols-outlined text-lg ${item.active ? 'opacity-100' : 'opacity-60'}`}>{item.icon}</span>
@@ -135,10 +135,10 @@ const App: React.FC = () => {
         <div className="flex items-center gap-2">
           <span className="text-[10px] font-bold opacity-40 uppercase">暗黑模式</span>
           <label className="relative inline-flex items-center cursor-pointer">
-            <input 
-              className="sr-only peer" 
-              type="checkbox" 
-              checked={isDarkMode} 
+            <input
+              className="sr-only peer"
+              type="checkbox"
+              checked={isDarkMode}
               onChange={() => setIsDarkMode(!isDarkMode)}
             />
             <div className="w-7 h-4 bg-black/10 dark:bg-white/20 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-primary"></div>
@@ -153,7 +153,7 @@ const App: React.FC = () => {
   return (
     <Layout sidebar={Sidebar} footer={Footer} isDarkMode={isDarkMode}>
       <div className="max-w-7xl mx-auto flex flex-col gap-8">
-        
+
         {/* Upper Dashboard Section */}
         <div className="grid grid-cols-12 gap-6 min-h-[450px]">
           {/* Main Chart Card */}
@@ -170,10 +170,10 @@ const App: React.FC = () => {
             </div>
             <div className="flex-1 flex items-center justify-center p-4">
               {isLoading ? (
-                  <div className="flex flex-col items-center gap-4 opacity-30 animate-pulse">
-                      <span className="material-symbols-outlined text-6xl">bubble_chart</span>
-                      <p className="text-sm font-medium">分析引擎正在渲染...</p>
-                  </div>
+                <div className="flex flex-col items-center gap-4 opacity-30 animate-pulse">
+                  <span className="material-symbols-outlined text-6xl">bubble_chart</span>
+                  <p className="text-sm font-medium">分析引擎正在渲染...</p>
+                </div>
               ) : (
                 <KeywordScatter data={keywords} />
               )}
@@ -189,11 +189,11 @@ const App: React.FC = () => {
                 <button className="px-3 py-1 text-[10px] font-semibold rounded-md opacity-50 hover:opacity-100 transition-all">趋势图</button>
               </div>
             </div>
-            
+
             {isLoading ? (
-                 <div className="flex-1 flex flex-col items-center justify-center gap-4 opacity-30 animate-pulse">
-                    <div className="w-32 h-32 rounded-full border-8 border-primary/20"></div>
-                 </div>
+              <div className="flex-1 flex flex-col items-center justify-center gap-4 opacity-30 animate-pulse">
+                <div className="w-32 h-32 rounded-full border-8 border-primary/20"></div>
+              </div>
             ) : (
               <SentimentDonut summary={summary} />
             )}
@@ -234,12 +234,12 @@ const App: React.FC = () => {
             ) : (
               posts.map(post => (
                 <div key={post.id} className="glass-card rounded-xl p-4 flex flex-col gap-3 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative group overflow-hidden">
-                  <button 
+                  <button
                     onClick={() => toggleStar(post.id)}
                     className="absolute top-3 right-3 flex items-center justify-center z-10"
                   >
-                    <span 
-                      className={`material-symbols-outlined text-[24px] transition-all duration-300 ${post.isStarred ? 'text-apple-gold scale-110' : 'text-slate-300 dark:text-slate-600 hover:text-apple-gold'}`} 
+                    <span
+                      className={`material-symbols-outlined text-[24px] transition-all duration-300 ${post.isStarred ? 'text-apple-gold scale-110' : 'text-slate-300 dark:text-slate-600 hover:text-apple-gold'}`}
                       style={{ fontVariationSettings: `'FILL' ${post.isStarred ? 1 : 0}` }}
                     >
                       star
@@ -247,10 +247,10 @@ const App: React.FC = () => {
                   </button>
 
                   <div className="flex items-center gap-3 pr-8">
-                    <img 
-                      alt={post.author} 
-                      className="w-9 h-9 rounded-full border border-black/5 dark:border-white/10" 
-                      src={post.avatar || `https://picsum.photos/seed/${post.author}/100/100`} 
+                    <img
+                      alt={post.author}
+                      className="w-9 h-9 rounded-full border border-black/5 dark:border-white/10"
+                      src={post.avatar || `https://picsum.photos/seed/${post.author}/100/100`}
                     />
                     <div>
                       <h4 className="text-xs font-bold truncate max-w-[120px]">{post.author}</h4>
@@ -263,11 +263,10 @@ const App: React.FC = () => {
                   </p>
 
                   <div className="flex items-center justify-between mt-2 pt-2 border-t border-black/5 dark:border-white/5">
-                    <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold uppercase ${
-                      post.sentiment === SentimentType.POSITIVE ? 'bg-green-100 dark:bg-green-900/30 text-green-600' :
-                      post.sentiment === SentimentType.NEGATIVE ? 'bg-red-100 dark:bg-red-900/30 text-red-600' :
-                      'bg-blue-100 dark:bg-blue-900/30 text-primary'
-                    }`}>
+                    <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold uppercase ${post.sentiment === SentimentType.POSITIVE ? 'bg-green-100 dark:bg-green-900/30 text-green-600' :
+                        post.sentiment === SentimentType.NEGATIVE ? 'bg-red-100 dark:bg-red-900/30 text-red-600' :
+                          'bg-blue-100 dark:bg-blue-900/30 text-primary'
+                      }`}>
                       {post.sentiment === SentimentType.POSITIVE ? '正向' : post.sentiment === SentimentType.NEGATIVE ? '负向' : '中性'}
                     </span>
                     <div className="flex items-center gap-3 text-[10px] opacity-40 font-medium">
