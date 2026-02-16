@@ -6,13 +6,18 @@ dotenv.config({ path: path.resolve(__dirname, '../.env.local') });
 const express = require('express');
 const cors = require('cors');
 const aiService = require('./aiService');
-const { supabase } = require('./supabaseClient');
+const { getSupabase } = require('./supabaseClient');
 
 const app = express();
 const PORT = process.env.PORT || 7777;
 
 app.use(cors());
 app.use(express.json());
+
+// Health check for Railway
+app.get('/', (req, res) => {
+    res.send('Weibo Sentiment Analysis API is running');
+});
 
 // Analyze Weibo content
 app.post('/api/analyze', async (req, res) => {
@@ -23,6 +28,8 @@ app.post('/api/analyze', async (req, res) => {
 
     try {
         console.log(`Analyzing query: ${query}`);
+        const supabase = getSupabase();
+        if (!supabase) throw new Error("Database client not initialized");
 
         // 1. Check if we already have this query in Supabase (optional caching)
         const { data: existingAnalysis, error: fetchError } = await supabase
@@ -92,6 +99,8 @@ app.get('/api/history', async (req, res) => {
     }
 });
 
-app.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server is listening on 0.0.0.0:${PORT}`);
+    console.log(`Environment check: ARK_API_KEY is ${process.env.ARK_API_KEY ? 'SET' : 'NOT SET'}`);
+    console.log(`Environment check: SUPABASE_URL is ${process.env.SUPABASE_URL ? 'SET' : 'NOT SET'}`);
 });
