@@ -99,8 +99,8 @@ app.get('/api/history', async (req, res) => {
     }
 });
 
-app.listen(PORT, () => {
-    console.log(`Server is listening on port ${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server is listening on 0.0.0.0:${PORT}`);
     console.log(`Environment check: ARK_API_KEY is ${process.env.ARK_API_KEY ? 'SET' : 'NOT SET'}`);
     console.log(`Environment check: SUPABASE_URL is ${process.env.SUPABASE_URL ? 'SET' : 'NOT SET'}`);
 });
