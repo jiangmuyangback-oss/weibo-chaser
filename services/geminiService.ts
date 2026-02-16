@@ -10,14 +10,15 @@ export const analyzeWeiboContent = async (query: string) => {
   try {
     response = await fetch(`${API_BASE_URL}/analyze`, {
       method: 'POST',
+      mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ query }),
     });
   } catch (netError: any) {
-    console.error("Network Error:", netError);
-    throw new Error(`无法连接到服务器 (${API_BASE_URL})。请检查后端是否正常运行且 CORS 已配置。`);
+    console.error("Network Error Details:", netError);
+    throw new Error(`无法连接到服务器 (${API_BASE_URL})。这可能是由于域名不可达、SSL证书问题或后端尚未完全就绪。详细错误: ${netError.message}`);
   }
 
   if (!response.ok) {

@@ -11,7 +11,11 @@ const { getSupabase } = require('./supabaseClient');
 const app = express();
 const PORT = process.env.PORT || 7777;
 
-app.use(cors());
+app.use(cors({
+    origin: '*', // Allow all origins in production
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express.json());
 
 // Health check for Railway
@@ -88,6 +92,9 @@ app.post('/api/analyze', async (req, res) => {
 // Get analysis history
 app.get('/api/history', async (req, res) => {
     try {
+        const supabase = getSupabase();
+        if (!supabase) throw new Error("Database client not initialized");
+
         const { data, error } = await supabase
             .from('analyses')
             .select('*')
@@ -95,6 +102,7 @@ app.get('/api/history', async (req, res) => {
         if (error) throw error;
         res.json(data);
     } catch (error) {
+        console.error('History fetch error:', error);
         res.status(500).json({ error: 'Failed to fetch history' });
     }
 });
