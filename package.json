@@ -10,8 +10,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "start": "if [ -d 'server' ]; then node server/index.js; else node index.js; fi",
-    "postinstall": "if [ -d 'server' ]; then cd server && npm install; fi"
+    "start": "node server/index.js",
+    "postinstall": "cd server && npm install"
   },
   "dependencies": {
     "recharts": "^3.7.0",
