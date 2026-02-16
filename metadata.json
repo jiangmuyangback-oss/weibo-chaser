@@ -1,0 +1,5 @@
+{
+  "name": "Weibo Sentiment Analysis Assistant",
+  "description": "A macOS-style dashboard for analyzing Weibo sentiment, trends, and keywords using Gemini AI.",
+  "requestFramePermissions": []
+}
